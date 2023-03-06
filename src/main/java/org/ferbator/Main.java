@@ -11,9 +11,8 @@ public class Main {
             System.out.println("1 - Добавить заметку");
             System.out.println("2 - Удалить заметку");
             System.out.println("3 - Показать список заметок");
-            System.out.println("4 - Сохранить заметки в файл");
-            System.out.println("5 - Открыть заметку");
-            System.out.println("6 - Выход");
+            System.out.println("4 - Открыть заметку");
+            System.out.println("5 - Выход");
 
             int choice = InputUtils.getInt("Выберите действие: ");
             switch (choice) {
@@ -39,10 +38,6 @@ public class Main {
                     noteList.displayAll();
                 }
                 case 4 -> {
-                    FileUtils.saveNotes(noteList);
-                    System.out.println("Заметки сохранены в файл.");
-                }
-                case 5 -> {
                     int index = InputUtils.getInt("Введите номер заметки для вывода: ") - 1;
                     if (index >= 0 && index < noteList.size()) {
                         System.out.println(noteList.getNote(index).toString());
@@ -50,8 +45,10 @@ public class Main {
                         System.out.println("Некорректный номер заметки.");
                     }
                 }
-                case 6 -> {
+                case 5 -> {
                     System.out.println("Выход из программы.");
+                    FileUtils.saveNotes(noteList);
+                    System.out.println("Заметки сохранены в файл.");
                     System.exit(0);
                 }
                 default -> System.out.println("Некорректный выбор.");
