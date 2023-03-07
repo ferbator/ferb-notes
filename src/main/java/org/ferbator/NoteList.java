@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NoteList {
-    public List<Note> notes = new ArrayList<>();
+    private final List<Note> notes = new ArrayList<>();
 
     public NoteList() {
     }

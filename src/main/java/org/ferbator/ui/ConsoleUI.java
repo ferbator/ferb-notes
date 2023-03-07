@@ -1,12 +1,21 @@
-package org.ferbator;
+package org.ferbator.ui;
 
-import org.ferbator.utils.FileUtils;
+import org.ferbator.Application;
+import org.ferbator.Note;
+import org.ferbator.NoteList;
 import org.ferbator.utils.InputUtils;
 
-public class Main {
-    public static void main(String[] args) {
-        NoteList noteList = FileUtils.loadNotes();
+public class ConsoleUI {
 
+    private final NoteList noteList;
+    private final Application app;
+
+    public ConsoleUI(NoteList noteList, Application app) {
+        this.noteList = noteList;
+        this.app = app;
+    }
+
+    public void start() {
         while (true) {
             System.out.println("1 - Добавить заметку");
             System.out.println("2 - Удалить заметку");
@@ -27,7 +36,6 @@ public class Main {
                     int index = InputUtils.getInt("Введите номер заметки для удаления: ") - 1;
                     if (index >= 0 && index < noteList.size()) {
                         noteList.remove(index);
-                        FileUtils.saveNotes(noteList);
                         System.out.println("Заметка удалена.");
                     } else {
                         System.out.println("Некорректный номер заметки.");
@@ -47,7 +55,7 @@ public class Main {
                 }
                 case 5 -> {
                     System.out.println("Выход из программы.");
-                    FileUtils.saveNotes(noteList);
+                    app.stop();
                     System.out.println("Заметки сохранены в файл.");
                     System.exit(0);
                 }

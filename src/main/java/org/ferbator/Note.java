@@ -1,8 +1,9 @@
 package org.ferbator;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Note {
+public class Note implements Serializable {
     private String title;
     private String content;
     private Date created;
@@ -45,7 +46,7 @@ public class Note {
 
     @Override
     public String toString() {
-        return String.format("%s '%s'\n%s\n", created, title, content);
+        return String.format("%s  /%s/\n", title, created);
     }
 }
 
