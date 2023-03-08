@@ -26,21 +26,17 @@ public class GraphicalUI {
         private NoteMenu() {
             super(new BorderLayout());
 
-            // Создаем модель для списка заметок
             listModel = new DefaultListModel<>();
 
             for (Note note : notes.getNotes()) {
                 listModel.addElement(note);
             }
 
-            // Создаем список заметок
             noteList = new JList<>(listModel);
             noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            noteList.setSelectedIndex(0);
             JScrollPane listScrollPane = new JScrollPane(noteList);
 
             JMenuBar menuBar = new JMenuBar();
-            //подменю файл
             JMenu m1 = new JMenu("Setting");
 
             JMenuItem mi1 = new JMenuItem("Сохранить");
@@ -73,7 +69,6 @@ public class GraphicalUI {
             menuBar.add(m1);
 
 
-            // Добавляем компоненты на панель
             add(listScrollPane, BorderLayout.CENTER);
             add(menuBar, BorderLayout.NORTH);
         }
@@ -101,13 +96,11 @@ public class GraphicalUI {
 
         frame.add(noteMenu, BorderLayout.EAST);
 
-        // Создание JTextPane для редактирования заметок и добавление его на JFrame
+
         noteEditor = new JTextPane();
         frame.add(new JScrollPane(noteEditor), BorderLayout.CENTER);
 
-        // Создание меню
         JMenuBar menuBar = new JMenuBar();
-        //подменю файл
         JMenu m1 = new JMenu("File");
 
         JMenuItem mi1 = new JMenuItem("New");
@@ -207,25 +200,19 @@ public class GraphicalUI {
     }
 
     private void saveFile() {
-        // Create an object of JFileChooser class
         JFileChooser j = new JFileChooser("f:");
 
-        // Invoke the showsSaveDialog function to show the save dialog
         int r = j.showSaveDialog(null);
 
         if (r == JFileChooser.APPROVE_OPTION) {
 
-            // Set the label to the path of the selected directory
             File fi = new File(j.getSelectedFile().getAbsolutePath());
 
             try {
-                // Create a file writer
                 FileWriter wr = new FileWriter(fi, false);
 
-                // Create buffered writer to write
                 BufferedWriter w = new BufferedWriter(wr);
 
-                // Write
                 w.write(noteEditor.getText());
 
                 w.flush();
@@ -233,8 +220,6 @@ public class GraphicalUI {
             } catch (Exception evt) {
                 JOptionPane.showMessageDialog(frame, evt.getMessage());
             }
-        }
-        // If the user cancelled the operation
-        else JOptionPane.showMessageDialog(frame, "the user cancelled the operation");
+        } else JOptionPane.showMessageDialog(frame, "the user cancelled the operation");
     }
 }

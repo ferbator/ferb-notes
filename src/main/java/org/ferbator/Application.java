@@ -8,26 +8,47 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Application {
-    private static final Boolean DEBUG = true;
+    private static final Boolean DEBUG = false;
     public static Boolean FIRST_START;
     private NoteList noteList;
     private final Path filePath = Paths.get("src/main/resources/conf.bin");
 
     public void init() {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(filePath.toFile());
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
+            oos.writeInt(1);
+            noteList.add(new Note("Hello", "Hello World!"));
+            oos.writeObject(noteList.getNote(0));
+
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public boolean isFileEmpty(File file) {
+        return file.length() == 0;
     }
 
     public void start() {
         try {
-            FileInputStream fis = new FileInputStream(filePath.toFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            if (!isFileEmpty(filePath.toFile())) {
+                FileInputStream fis = new FileInputStream(filePath.toFile());
+                ObjectInputStream ois = new ObjectInputStream(fis);
 
-            int notesCount = ois.readInt();
+                int notesCount = ois.readInt();
 
-            for (int i = 0; i < notesCount; i++) {
-                noteList.add((Note) ois.readObject());
+                for (int i = 0; i < notesCount; i++) {
+                    noteList.add((Note) ois.readObject());
+                }
+            } else {
+                init();
             }
-
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
