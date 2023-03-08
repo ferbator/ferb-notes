@@ -15,3 +15,6 @@
 ## Использованно
 - swing, awt
 - java.io.Serializable
+
+## Пример интерфейса
+![alt text](https://raw.githubusercontent.com/ferbator/ferb-notes/e3a79a18c43b61a02505a126b104ff8e3d6fa571/2023-03-08_17-08-50.png)
