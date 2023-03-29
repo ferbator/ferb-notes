@@ -5,7 +5,7 @@ import org.ferbator.Note;
 import org.ferbator.NoteList;
 import org.ferbator.utils.InputUtils;
 
-public class ConsoleUI {
+public class ConsoleUI implements UI {
 
     private final NoteList noteList;
     private final Application app;
@@ -15,6 +15,7 @@ public class ConsoleUI {
         this.app = app;
     }
 
+    @Override
     public void start() {
         while (true) {
             System.out.println("1 - Добавить заметку");

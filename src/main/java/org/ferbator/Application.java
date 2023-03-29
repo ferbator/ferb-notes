@@ -2,6 +2,7 @@ package org.ferbator;
 
 import org.ferbator.ui.ConsoleUI;
 import org.ferbator.ui.GraphicalUI;
+import org.ferbator.ui.UI;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -12,9 +13,10 @@ public class Application {
     public static Boolean FIRST_START;
     private NoteList noteList;
     private final Path filePath = Paths.get("src/main/resources/conf.bin");
+    private UI ui;
 
     public void init() {
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
             fos = new FileOutputStream(filePath.toFile());
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -38,6 +40,7 @@ public class Application {
     public void start() {
         try {
             if (!isFileEmpty(filePath.toFile())) {
+                FIRST_START = false;
                 FileInputStream fis = new FileInputStream(filePath.toFile());
                 ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -47,6 +50,7 @@ public class Application {
                     noteList.add((Note) ois.readObject());
                 }
             } else {
+                FIRST_START = true;
                 init();
             }
         } catch (IOException | ClassNotFoundException e) {
@@ -74,11 +78,13 @@ public class Application {
         var service = new Application();
         service.noteList = new NoteList();
         service.start();
+
         if (DEBUG) {
-            ConsoleUI consoleUI = new ConsoleUI(service.noteList, service);
-            consoleUI.start();
+            service.ui = new ConsoleUI(service.noteList, service);
+            service.ui.start();
         } else {
-            GraphicalUI graphicalUI = new GraphicalUI(service.noteList, service);
+            service.ui = new GraphicalUI(service.noteList, service);
+            service.ui.start();
         }
     }
 }

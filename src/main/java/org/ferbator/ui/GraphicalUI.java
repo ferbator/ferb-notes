@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class GraphicalUI {
+public class GraphicalUI implements UI {
     private JFrame frame;
     private JTextPane noteEditor;
     private final NoteList notes;
@@ -77,10 +77,11 @@ public class GraphicalUI {
     public GraphicalUI(NoteList notes, Application app) {
         this.notes = notes;
         this.app = app;
-        createUI();
     }
 
-    private void createUI() {
+
+    @Override
+    public void start() {
         frame = new JFrame("Заметки");
 
 
